@@ -19,7 +19,7 @@ import com.pixel.basic.tools.SecurityUtil;
 
 
 
-@Component
+@Component   //基本注解, 标识了一个受 Spring 管理的组件
 public class UserServiceImpl {
 
 @Autowired
@@ -63,7 +63,6 @@ public void initBaseUser(User user){//建立配置系统菜单
 			role.setSn("ROLE_SUPER_ADMIN");
 			roleService.save(role);
 			//查询菜单的所有(或所有路径)
-			//List<Menu> menulist =menuService.listAllUrlMenu();
 			List<Menu> menulist=menuService.findAll();
 			for(Menu m:menulist){//循环遍历
 				roleMenuServiceImpl.addOrDelete(role.getId(), m.getId());

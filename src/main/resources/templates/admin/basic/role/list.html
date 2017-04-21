@@ -3,7 +3,7 @@
 	  xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorator="fragments/adminModel">
+	  layout:decorator="fragments/adminModel"> <!-- list页面嵌入这个底板里 -->
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<title>角色列表</title>
@@ -15,13 +15,15 @@
 	</head>
 <body>
 	<div th:fragment="content" th:remove="tag">
-		<div class="header lighter smaller blue">
+		<div class="header lighter smaller blue">                                     <!-- 获取参数 -->
 			<h3><span class="glyphicon glyphicon-th-list"></span>&nbsp;角色列表<small>（<span th:text="${#lists.size(datas)}"></span>）</small></h3>
 			<div th:replace="admin/basic/role/nav :: content" th:remove="tag"></div>
 		</div>
 
-        <div th:replace="admin/basic/role/filter :: content" th:remove="tag"></div>
-
+        <div th:replace="admin/basic/role/filter :: content" th:remove="tag"></div> <!-- 内嵌filter页面，这个页面效果用于查询 -->
+    
+    <!-- 中间表单部位 -->
+<!-- table-responsive 创建响应式表格 -->
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
@@ -34,6 +36,7 @@
 				</thead>
 
 				<tbody>
+				 <!-- 对应RoleController中的datas -->
 					<tr th:each="obj : ${datas}">
 						<td th:text="${obj.id}">${obj.id}</td>
 						<td th:text="${obj.name}">${obj.name}</td>
@@ -53,6 +56,8 @@
 					</tr>
 				</tbody>
 			</table>
+			
+                  <!-- 这里引入分页功能的页面 -->
 			<div th:include="fragments/page :: pager" th:remove="tag"></div>
 		</div>
 	</div>

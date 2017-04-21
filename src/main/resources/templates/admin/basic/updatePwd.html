@@ -6,43 +6,51 @@
       layout:decorator="fragments/adminModel">
   <!--layout布局    decorator装饰-->
     <head>
-        <title>修改个人信息</title>           <!--引入这个是做页面的前台验证-->
+        <title>修改个人信息</title>           <!--引入这个是做页面的前台验证(这个是ajax验证来做的 （Validator验证器)-->
         <script type="text/javascript" src="/basic/validate/bootstrapValidator.js"></script>
     </head>
     <body>
-        <div th:fragment="content">
-            <div class="header lighter smaller blue">
+        <div th:fragment="content">  <!-- 位于中间位置 -->
+            <div class="header lighter smaller blue">  <!-- 蓝色小字体 -->
                 <h3><i class="icon-edit"></i>&nbsp;修改个人信息 &nbsp;&nbsp;<span th:if="${flag eq 2}" 
                 class="red icon-exclamation-sign">修改信息失败</span><span th:if="${flag eq 1}" class="green icon-ok">修改信息成功</span>
-                    <span th:if="${errorMsg ne null and errorMsg ne ''}" class="red icon-exclamation-sign">修改信息失败</span>
+    <span th:if="${errorMsg ne null and errorMsg ne ''}" class="red icon-exclamation-sign">修改信息失败</span>
+               <!-- errorMsg修改为空判为失败 -->
                 </h3>
             </div>
 
             <form method="POST" id="dataForm">
                 <div class="form-group form-group-lg">
-                    <label for="nickname">用户昵称</label>
+                    <label for="nickname">用户昵称</label> <!-- AuthToken登陆令牌对象DTO。登陆放在Session中的名称(这里讲修改的昵称反正session.LOGIN_USER里面) -->   
                     <input name="nickname" class="form-control" id="nickname" placeholder="请输入用户昵称" th:value="${session.LOGIN_USER.user.nickname}"/>
                 </div>
                 <div class="form-group form-group-lg">
                     <label for="username">登陆用户名</label>    <!-- readonly="true"设置了不可改 -->
                     <input name="username" class="form-control" readonly="true" id="username" placeholder="请输入登陆用户名" th:value="${session.LOGIN_USER.user.username}"/>
                 </div>
+                 <!-- 输入原始旧密码 id password 在数据库进行匹配 -->
                 <div class="form-group form-group-lg">
                     <label for="password">原始密码<small>（不修改密码可以不输入）</small></label>
                     <input type="password" name="oldPwd" class="form-control" id="password" placeholder="请输入原始密码"/>
                 </div>
+                 
+    <!-- 输入原始旧密码 id password 在数据库进行匹配 -->
                 <div class="form-group form-group-lg">
                     <label for="repwd">登陆密码<small>（不修改密码可以不输入）</small></label>
                     <input type="password" name="password" class="form-control" id="repwd" placeholder="请输入登陆密码"/>
                 </div>
+                
+    <!-- 输入重复密码 id confirmPassword 确保这里输入和你输入的新密码一样 进行一个简单的验证-->
                 <div class="form-group form-group-lg">
                     <label for="confirmPassword">重复密码<small>（不修改密码可以不输入）</small></label>
                     <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="请再次输入登陆密码"/>
                 </div>
+                 <!-- 进行token验证 -->
                 <input type="hidden" name="token" th:value="${token}"/>
                 <button type="submit" class="btn btn-primary">确定提交</button>
             </form>
             
+     <!-- 用ajax进行页面验证 -->
            <script type="text/javascript">
 			jQuery(function($) {
 				$('#dataForm').bootstrapValidator({

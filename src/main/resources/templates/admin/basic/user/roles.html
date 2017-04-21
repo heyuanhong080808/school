@@ -12,27 +12,31 @@
 </head>
 <body>
 	<div th:fragment="content" th:remove="tag">
-		<div class="header lighter smaller blue">
+		<div class="header lighter smaller blue">  <!-- 获取用户的昵称和用户名 --> 
 			<h3><i class="icon-key"></i>&nbsp;为用户授权 <small th:text="${user.nickname}+'['+${user.username}+']'"></small></h3>
 			<div th:replace="admin/basic/user/nav :: content" th:remove="tag"></div>
 		</div>
 		
 		<div class="widget-box">
-			<div class="widget-header header-color-blue2">
+			<div class="widget-header header-color-blue2">   <!-- 列出当前有多少个角色 -->
 				<h4 class="lighter smaller">在角色名前面打钩则表示授权（共有【<b th:text="${#lists.size(roleList)}"></b>】个角色）</h4>
 			</div>
 
 			<div class="list-group" th:each="obj : ${roleList}">
 					<a href="javascript:" class="list-group-item">
-						<label>
+						<label>                                 <!-- 获取角色的id 和角色的名字 -->
 							<input class="ace ace-checkbox-2 single-role-box" th:id="'role_'+${obj.id}" type="checkbox" />
 							<span class="lbl" th:text="${obj.name}">&nbsp;${obj.name}</span>
 						</label>
 					</a>
 			</div>
+			
+	                           <!-- 隐藏当前的角色id和用户id -->
+	        <!-- 这等于是隐藏值，客户端无需显示，但提交后后台能够接受,只是用来传递客户参数 -->  
 			<input type="hidden" id="curRoles" th:value="${roleIds}"/>
 			<input type="hidden" id="curUserId" th:value="${user.id}"/>
 		</div>
+		    <!-- 添加这个可以当设置后自动弹出设置成功 -->
 		<script type="text/javascript" src="/admin/myself/user_roles.js"></script>
 	</div>
 </body>

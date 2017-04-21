@@ -6,6 +6,7 @@
 	  layout:decorator="fragments/adminModel">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		                                <!-- /basic/validate/bootstrapValidator.js引入前台验证效果 -->
 		<script type="text/javascript" src="/basic/validate/bootstrapValidator.js"></script>
 		<title>添加用户</title>
 	</head>
@@ -16,34 +17,38 @@
 				<div th:replace="admin/basic/user/nav :: content" th:remove="tag"></div>
 			</div>
 
-			<form method="POST" th:object="${user}" id="dataForm">
+			<form method="POST" th:object="${user}" id="dataForm">   <!-- 获取用户的数据 -->
 				<div class="form-group form-group-lg">
 					<label for="nickname">用户昵称</label>
 					<input type="text" name="nickname" th:value="${user.nickname}" class="form-control" id="nickname" placeholder="请输入用户昵称"/>
+				   <!-- 获取用户输入的昵称 -->
 				</div>
+				<!-- 获取用户输入的用户名 -->
 				<div class="form-group form-group-lg">
 					<label for="username">登陆用户名</label>
 					<input type="text" name="username" th:value="${user.username}" class="form-control" id="username" placeholder="请输入登陆用户名"/>
 				</div>
+				 <!-- 获取登录密码 -->
 				<div class="form-group form-group-lg">
 					<label for="password">登陆密码</label>
 					<input type="password" name="password" class="form-control" id="password" placeholder="请输入登陆密码"/>
 				</div>
+				<!-- 验证密码是不是一致性 -->
 				<div class="form-group form-group-lg">
 					<label for="confirmPassword">重复密码</label>
 					<input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="请再次输入登陆密码"/>
 				</div>
-				
+				<!-- 状态 -->
 				<div class="form-group form-group-lg">
 					<div class="input-group input-group-lg">
 						<div class="input-group-addon">用户状态</div>
-						<div class="form-control">
+						<div class="form-control">                        <!-- 1为启用 0为 停用-->
 							<input type="radio" name="status" value="1" id="status_1" th:checked="${user.status == 1}?'checked'"/><label for="status_1">启用</label>
 							<input type="radio" name="status" value="0" id="status_0" th:checked="${user.status == 0}?'checked'"/><label for="status_0">停用</label>
 						</div>
 					</div>
 				</div>
-				<input type="hidden" name="token" th:value="${session.token}"/>
+				<input type="hidden" name="token" th:value="${session.token}"/>  <!-- 将添加用户信息放在session里面 -->
 				<button type="submit" class="btn btn-primary">确定提交</button>
 			</form>
 			<script type="text/javascript">

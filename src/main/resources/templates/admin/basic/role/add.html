@@ -6,6 +6,7 @@
 	  layout:decorator="fragments/adminModel">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		                                 <!-- 加个bootstrapValidator.js前台内容的验证 -->
 		<script type="text/javascript" src="/basic/validate/bootstrapValidator.js"></script>
 		<title>添加角色</title>
 	</head>
@@ -14,8 +15,9 @@
 			<div class="header lighter smaller blue">
 				<h3><i class="fa fa-plus"></i>&nbsp;添加角色 </h3>
 				<div th:replace="admin/basic/role/nav :: content" th:remove="tag"></div>
+			<!-- 内嵌nav页面当点解添加角色就会进行链接 -->
 			</div>
-
+                         <!--对应RoleController添加用户中的role -->
 			<form method="POST" th:object="${role}" id="dataForm">
 				<div class="form-group form-group-lg">
 					<label for="name">角色名称</label>

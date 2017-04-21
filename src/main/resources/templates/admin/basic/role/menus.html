@@ -7,14 +7,20 @@
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<script type="text/javascript" src="/basic/js-lib/bootstrap-treeview.min.js"></script>
+	                                     <!-- 加入bootstrap-treeview.min显示分层树结构效果 -->
 	<title>为角色授权</title>
 	</head>
 	<body>
 		<div th:fragment="content" th:remove="tag">
-			<div class="header lighter smaller blue">
+			<div class="header lighter smaller blue">    <!-- 获取用户名字 -->
 				<h3><i class="icon-key"></i>&nbsp;为角色授权 <small th:text="${role.name}"></small></h3>
 				<div th:replace="admin/basic/role/nav :: content" th:remove="tag"></div>
+			       <!-- 内嵌nav页面当点解添加角色就会进行链接 -->
 			</div>
+			
+			<!-- Widgetbox是一个提供为网站或blog提供widget的服务，并且提供个性化Widget定制服务的网站，
+你可以在Widgetbox可以找到自己感兴趣的widget ，或者定制自己的Widget然后加到自己的网站或blog中。 -->
+			
 			<div class="widget-box">
 				<div class="widget-header header-color-blue2">
 					<h4 class="lighter smaller">在菜单名前面打钩则表示授权，需要操作最底层菜单才能生效</h4>
@@ -25,10 +31,13 @@
 						<div id="tree1" class="tree"></div>
 					</div>
 				</div>
+			                            	<!-- 获取菜单数据 -->
 				<input type="hidden" id="treeJson" th:value="${treeJson}"/>
-				<input type="hidden" id="objId" th:value="${role.id}"/>
+				<input type="hidden" id="objId" th:value="${role.id}"/> <!-- 获取角色id -->
+				<!-- 调用roleService里的listRloeMenuIds方法，（获取所有角色所有组的id（根据角色的id获取对应的所有菜单id）） -->
 				<input type="hidden" id="curAuth" th:value="${curAuth}"/>
 			</div>
+			<!-- 加入这个链接 用于做展开分层作用 -->
 			<script type="text/javascript" src="/admin/myself/role_menus.js"></script>
 		</div>
 	</body>

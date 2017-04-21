@@ -3,7 +3,8 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="fragments/adminModel">
+      layout:decorator="fragments/adminModel"> 
+      <!-- index页面到后面要嵌入fragments文件夹下的adminModel 页面 -->
 
     <head>
         <title>后台首页</title>
@@ -21,9 +22,13 @@
                 <i class="icon-ok green"></i>
                 欢迎登陆
                 <strong class="green">
+                 <!-- 动态参数传入,使用了thymeleaf模板引擎 -->
                     <b th:text="${session.appConfig.appName}">系统名称</b>
                     <small th:text="${session.appConfig.appVersion}">版本</small>
                 </strong>
+                 <!-- 因为将User（包括appName，appVersion）和 LOGIN_USER，
+                login_time都放在AuthToken登陆令牌对象DTO里面，所有用session来引用-->
+                
                 ，登陆IP：<span th:text="${session.LOGIN_USER.login_ip}">登陆IP</span>，登陆时间：
                 <span th:text="${#dates.format(session.LOGIN_USER.login_time, 'yyyy-MM-dd HH:mm:ss')}"></span>
             </div>
